@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import './Nav.css'; // Import the CSS file
 
 const Nav = () => {
@@ -12,6 +13,14 @@ const Nav = () => {
     setActiveLink(link);
     if (link === 'home') {
       navigate('/');
+    } else if (link == 'profile' || link == 'carts') {
+      const token = Cookies.get('token');
+      const userId = Cookies.get('id');
+      if (token && userId) {
+        navigate(`/${link}/${userId}`);
+      } else {
+        navigate('/login');
+      }
     } else {
       navigate(`/${link}`);
     }
