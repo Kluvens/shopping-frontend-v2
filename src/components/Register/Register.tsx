@@ -1,60 +1,58 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Register.css'
+import axios, { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
+import './Register.css';
+
+interface RegisterFormData {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 const Register = () => {
-  const [name, setName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [formData, setFormData] = useState<RegisterFormData>({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [passwordMatch, setPasswordMatch] = useState<boolean>(true);
   const [showRed, setShowRed] = useState<boolean>(false);
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
   };
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match.");
+      return;
+    }
 
-  const handleConfirmPasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setShowRed(false);
-    setConfirmPassword(event.target.value);
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (password === confirmPassword) {
-      const response = await fetch('https://aipurui-backend.onrender.com/api/users/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, password }),
-      });
-
-      if (response.status === 200) {
-        const { message, userId, token } = await response.json();
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        localStorage.setItem('token', token); // Save JWT token to local storage
-        localStorage.setItem('userId', userId);
-        navigate(`/profile/${userId}`);
-      } else {
-        const { message } = await response.json();
-        setError(message);
-      }
-    } else {
-      setShowRed(true);
-      setPasswordMatch(false);
+    try {
+      const response = await axios.post(
+        "http://localhost:8082/api/users/register",
+        formData
+      );
+      const { token, userId } = response.data;
+      Cookies.remove('token');
+      Cookies.remove('userId');
+      Cookies.set("token", token);
+      Cookies.set("userId", userId);
+      navigate(`/profile/${userId}`);
+    } catch (error) {
+      console.error(error);
+      setError("Failed to register. Please try again.");
     }
   };
 
@@ -67,23 +65,24 @@ const Register = () => {
             <h2>注册我的爱普瑞</h2>
             <div>
               <label>姓名:</label>
-              <input className="register-input" type="text" value={name} onChange={handleNameChange} />
+              <input className="register-input" type="text" name="name" value={formData.name} onChange={handleInputChange} />
             </div>
             <div>
               <label>邮箱:</label>
-              <input className="register-input" type="email" value={email} onChange={handleEmailChange} />
+              <input className="register-input" type="email" name="email" value={formData.email} onChange={handleInputChange} />
             </div>
             <div>
               <label>密码:</label>
-              <input className="register-input" type="password" value={password} onChange={handlePasswordChange} />
+              <input className="register-input" type="password" name="password" value={formData.password} onChange={handleInputChange} />
             </div>
             <div>
               <label>确认密码:</label>
               <input
                 className="register-input"
                 type="password"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
+                name='confirmPassword'
+                value={formData.confirmPassword}
+                onChange={handleInputChange}
                 style={{ borderColor: showRed ? 'red' : 'initial' }}
               />
               {showRed ? <p style={{ color: 'red' }}>密码不匹配</p> : null}

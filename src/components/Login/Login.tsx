@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import './Login.css'
-import {HiOutlineMail} from 'react-icons/hi'
-import {RiLockPasswordLine} from 'react-icons/ri'
+import './Login.css';
+import {HiOutlineMail} from 'react-icons/hi';
+import {RiLockPasswordLine} from 'react-icons/ri';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 interface LoginResponse {
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  },
+  userId: string;
   token: string;
 }
 
@@ -33,25 +31,22 @@ const Login = () => {
     event.preventDefault();
   
     try {
-      const response = await fetch("https://aipurui-backend.onrender.com/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const response = await axios.post<LoginResponse>('http://localhost:8082/api/users/login', {
+        email,
+        password,
       });
-  
-      if (response.status === 200) {
-        const { user, token } = await response.json() as LoginResponse;
-        localStorage.setItem('token', token); // Save JWT token to local storage
-        localStorage.setItem('userId', user.id);
-        navigate(`/profile/${user.id}`);
+    
+      const { userId, token } = response.data;
+    
+      Cookies.set('token', token);
+      Cookies.set('userId', userId);
+      navigate(`/profile/${userId}`);
+    } catch (error: any) {
+      if (error.response) {
+        setError(error.response.data.message);
       } else {
-        const { message } = await response.json();
-        setError(message);
+        setError('An error occurred while processing your request. Please try again later.');
       }
-    } catch (error) {
-      setError('An error occurred while processing your request. Please try again later.');
     }
   }
 
@@ -73,7 +68,7 @@ const Login = () => {
         </div>
           {error && <div style={{ color: 'red' }}>{error}</div>} {/* display error message in red */}
           <button className='login-button' type="submit">登录</button>
-          <h4>还没有账户?   <span login-to-register><Link to="/register">立即注册</Link></span></h4>
+          <h4>还没有账户?   <span className='login-to-register'><Link to="/register">立即注册</Link></span></h4>
         </form>
       </div>
     </div>
