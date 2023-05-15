@@ -2,14 +2,26 @@ import { ProductType } from "../Products";
 import {FaCartPlus} from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import { Buffer } from "buffer";
-import './Product.css'
+import Cookies from 'js-cookie';
+import './Product.css';
+import axios from "axios";
 
 const Product = (props: { key: string; product: ProductType }) => {
   const {_id, name, category, price, image} = props.product;
   const navigate = useNavigate();
 
   const addToCart = async () => {
-
+    try {
+      const response = await axios.patch(`http://localhost:8082/api/users/cart/add/${_id}`, null, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get('token')}`
+        }
+      });
+      const data = response.data;
+      alert(data.message);
+    } catch (error: any) {
+      console.error(error);
+    }
   }
 
   const toProductDetails = () => {
@@ -24,7 +36,7 @@ const Product = (props: { key: string; product: ProductType }) => {
           alt={name}
         />
       </div>
-      <h3 className="label">{name}</h3>
+      <h2 className="label-title">{name}</h2>
       <p className="label">分类: {category}</p>
       <p className="label">价格: {price}</p>
       <button onClick={addToCart}><FaCartPlus/> <span>加入购物车</span> </button>

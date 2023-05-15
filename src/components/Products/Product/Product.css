@@ -1,29 +1,45 @@
 .product {
-  border-radius: 10px;
+  width: 370px;
   text-align: left;
+  border-radius: 10px;
   box-sizing: border-box;
   margin: 10px;
   margin-top: 25px;
+  padding-bottom: 20px;
+  background: rgb(227, 227, 227);
+  box-shadow: 15px 15px 30px #bebebe,
+             -15px -15px 30px #ffffff;
 }
 
+.p-img {
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  width: 370px;
+  height: 260px;
+}
 
 .p-img img {
+  overflow: hidden;
   width: auto;
   height: 260px;
-  border: 1px solid #eee;
-  cursor: pointer;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.p-img:hover {
-  box-shadow: 3px 3px 7px gray;
+.label-title {
+  margin-left: 15px;
+  font-size: 25px;
 }
 
 .label {
     margin-top: 10px;
     font-size: 15px;
+    margin-left: 15px;
 }
 
 .product button {
@@ -34,6 +50,7 @@
   padding: 10px 20px;
   border-radius: 5px;
   transition: all 0.3s ease-in-out;
+  margin-left: 15px;
 }
 
 .product button:hover {

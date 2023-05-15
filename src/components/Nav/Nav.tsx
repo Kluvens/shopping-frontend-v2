@@ -13,9 +13,10 @@ const Nav = () => {
     setActiveLink(link);
     if (link === 'home') {
       navigate('/');
-    } else if (link == 'profile' || link == 'carts') {
+    } else if (link === 'profile' || link === 'cart') {
+      console.log(link);
       const token = Cookies.get('token');
-      const userId = Cookies.get('id');
+      const userId = Cookies.get('userId');
       if (token && userId) {
         navigate(`/${link}/${userId}`);
       } else {
@@ -69,8 +70,8 @@ const Nav = () => {
           onClick={() => handleLinkClick('about')}
         >About</a></li>
         <li><a 
-          className={activeLink === 'carts' ? 'active' : ''}
-          onClick={() => handleLinkClick('carts')}
+          className={activeLink === 'cart' ? 'active' : ''}
+          onClick={() => handleLinkClick('cart')}
         >Carts</a></li>
       </ul>
     </div>

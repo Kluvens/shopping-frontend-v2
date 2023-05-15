@@ -20,8 +20,8 @@ const Footer = () => {
               <h3>Info</h3>
               <ul>
                 <li><a href="#">Company</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Carts</a></li>
+                <li><a href="#">个人中心</a></li>
+                <li><a href="#">购物车</a></li>
               </ul>
             </div>
           </div>

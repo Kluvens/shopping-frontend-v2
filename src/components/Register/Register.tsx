@@ -39,6 +39,8 @@ const Register = () => {
       return;
     }
 
+    console.log(formData);
+
     try {
       const response = await axios.post(
         "http://localhost:8082/api/users/register",

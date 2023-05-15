@@ -24,7 +24,7 @@ root.render(
           <Route path="/login" element={ <Login/> }/>
           <Route path="/register" element={ <Register/> }/>
           <Route path="/products" element={ <Prodcuts/> }/>
-          <Route path="/carts/:id" element={ <Cart/> }/>
+          <Route path="/cart/:id" element={ <Cart/> }/>
           <Route path="/profile/:id" element={ <Profile/> }/>
           <Route path="/product/:id" element={ <ProductDetails/> }/>
           <Route path='*' element={<NotFound />}/>

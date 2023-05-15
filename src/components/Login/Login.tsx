@@ -38,8 +38,11 @@ const Login = () => {
     
       const { userId, token } = response.data;
     
+      Cookies.remove('token');
+      Cookies.remove('userId');
       Cookies.set('token', token);
       Cookies.set('userId', userId);
+      console.log(Cookies.get('userId'));
       navigate(`/profile/${userId}`);
     } catch (error: any) {
       if (error.response) {
