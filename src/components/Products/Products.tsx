@@ -97,7 +97,7 @@ const Prodcuts = () => {
       <div className='all-products'>
         <div className='shopleft'>
           <div className='shopbg'>
-            <h2>search</h2>
+            <h2>搜索</h2>
             <div className="shop-w">
               <input name="skeyword" className="sch" type="text" placeholder="请输入cas号或产品名称." onChange={e => setSearchString(e.target.value)}/>
               <button type="submit" className='schgo' onClick={() => handleSearch(searchString)}>Go</button>
@@ -110,19 +110,19 @@ const Prodcuts = () => {
               <ul className="catelist">
                 <li><a onClick={() => handleFilterCategory('all')}>全部</a></li>
                 <li><a onClick={() => handleFilterCategory('h')}>h</a></li>
-                {/* <li><a onClick={() => filterProducts('胶粘剂', '')}>胶粘剂</a></li>
-                <li><a onClick={() => filterProducts('催化剂及助剂', '')}>催化剂及助剂</a></li>
-                <li><a onClick={() => filterProducts('医药与生物化工', '')}>医药与生物化工</a></li>
-                <li><a onClick={() => filterProducts('化学试剂', '')}>化学试剂</a></li>
-                <li><a onClick={() => filterProducts('中间体', '')}>中间体</a></li>
-                <li><a onClick={() => filterProducts('聚合物', '')}>聚合物</a></li>
-                <li><a onClick={() => filterProducts('食品和饲料添加剂', '')}>食品和饲料添加剂</a></li>
-                <li><a onClick={() => filterProducts('信息化学品', '')}>信息化学品</a></li>
-                <li><a onClick={() => filterProducts('化学矿', '')}>化学矿</a></li>
-                <li><a onClick={() => filterProducts('石油化工', '')}>石油化工</a></li>
-                <li><a onClick={() => filterProducts('香精与香料', '')}>香精与香料</a></li>
-                <li><a onClick={() => filterProducts('无机化工', '')}>无机化工</a></li>
-                <li><a onClick={() => filterProducts('农用化学品', '')}>农用化学品</a></li> */}
+                <li><a onClick={() => handleFilterCategory('胶粘剂')}>胶粘剂</a></li>
+                <li><a onClick={() => handleFilterCategory('催化剂及助剂')}>催化剂及助剂</a></li>
+                <li><a onClick={() => handleFilterCategory('医药与生物化工')}>医药与生物化工</a></li>
+                <li><a onClick={() => handleFilterCategory('化学试剂')}>化学试剂</a></li>
+                <li><a onClick={() => handleFilterCategory('中间体')}>中间体</a></li>
+                <li><a onClick={() => handleFilterCategory('聚合物')}>聚合物</a></li>
+                <li><a onClick={() => handleFilterCategory('食品和饲料添加剂')}>食品和饲料添加剂</a></li>
+                <li><a onClick={() => handleFilterCategory('信息化学品')}>信息化学品</a></li>
+                <li><a onClick={() => handleFilterCategory('化学矿')}>化学矿</a></li>
+                <li><a onClick={() => handleFilterCategory('石油化工')}>石油化工</a></li>
+                <li><a onClick={() => handleFilterCategory('香精与香料')}>香精与香料</a></li>
+                <li><a onClick={() => handleFilterCategory('无机化工')}>无机化工</a></li>
+                <li><a onClick={() => handleFilterCategory('农用化学品')}>农用化学品</a></li>
               </ul>
             </div>
           </div>
@@ -134,9 +134,9 @@ const Prodcuts = () => {
             <div className="filter">
               <RiOrderPlayFill className='order-icon' />
               <select id="filter-select" value={orderby} onChange={handleOrderBy}>
-                <option value="random">random</option>
-                <option value="price">price</option>
-                <option value="favourites">favourites</option>
+                <option value="默认·">默认</option>
+                <option value="价格">价格</option>
+                <option value="收藏">收藏</option>
               </select>
             </div>
           </div>

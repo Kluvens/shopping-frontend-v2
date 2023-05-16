@@ -2,6 +2,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .page {
@@ -117,7 +118,7 @@
 .index_data {
   display: flex;
   background: #ececec url('../../assets/bg_index_ask.png') 100% 0%/auto;
-  height: 200px;
+  height: 240px;
 }
 
 .index_data_grid {
@@ -148,7 +149,7 @@
 }
 
 .index_data_item h2 {
-  font-size: 30px;
+  font-size: 55px;
   margin: 5px 0;
   animation-duration: 10s;
   animation-fill-mode: forwards;
@@ -308,5 +309,90 @@
 
 .contact-buttons-second:hover {
   font-size: 26px;
+}
+
+.home-first-products {
+  position: relative;
+}
+
+.home-second-products {
+  position: relative;
+}
+
+.home-products-list {
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding-bottom: 16px; /* Add bottom padding if necessary */
+}
+
+.home-products-list-title {
+  text-align: center;
+}
+
+.home-products-list-title h2 {
+  font-size: 40px;
+}
+
+.home-products-wrapper {
+  position: relative;
+  display: inline-flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+  gap: 32px;
+  padding: 0 16px;
+  z-index: 1;
+}
+
+.home-products-list::-webkit-scrollbar {
+  display: none;
+}
+
+.horizontal-scroll-buttons {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 40px);
+  z-index: 2;
+  top: 50%;
+  padding: 0 20px;
+}
+
+.horizontal-scroll-buttons button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #f2f2f2;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+@media (max-width: 1500px) {
+  .latest-stories {
+    display: block;
+  }
+
+  .story-left {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  .story-right {
+    margin: 0;
+  }
+  
+  .story-right-top,
+  .story-right-bottom {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  .story-right-top-img {
+    overflow: hidden;
+    width: 1000px;
+    height: 560px;
+  }
 }
 

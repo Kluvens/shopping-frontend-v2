@@ -7,6 +7,9 @@ import { GiChemicalDrop } from 'react-icons/gi';
 import { AiOutlineGlobal } from 'react-icons/ai';
 import { useSpring, animated } from 'react-spring';
 import { useState, useEffect, useRef } from 'react';
+import ProductCard from '../ProductCard/ProductCard';
+import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
+import axios from 'axios';
 
 function Home() {
   const ref1 = useRef<HTMLDivElement>(null);
@@ -15,6 +18,13 @@ function Home() {
   const [num1, setNum1] = useState<number>(0);
   const [num2, setNum2] = useState<number>(0);
   const [num3, setNum3] = useState<number>(0);
+
+  const [favourites, setFavourites] = useState<any>([]);
+  const [randomProducts, setRandomProducts] = useState<any>([]);
+
+  const firstRef = useRef(null);
+  const secRef = useRef(null);
+  const [arrowDisable, setArrowDisable] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
@@ -38,6 +48,20 @@ function Home() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8082/api/products/home');
+        setFavourites(response.data.favourites);
+        setRandomProducts(response.data.randomProducts);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const animateNumber = (setNumber: (n: number) => void, targetNumber: number) => {
     let startNumber = 0;
     const step = Math.ceil(targetNumber / 50); // 50 steps over 1.5s
@@ -56,6 +80,24 @@ function Home() {
     delay: 0, // adds a 500ms delay before the animation starts
     config: { duration: 2000 }, // sets the duration of the animation to 1 second
   });
+
+  const handleHorizantalScroll = (element: any, speed: number, distance: number, step: number) => {
+    console.log(element)
+    let scrollAmount = 0;
+    const slideTimer = setInterval(() => {
+      element.scrollLeft = element.scrollLeft + step;
+      console.log(element.scrollLeft);
+      scrollAmount += Math.abs(step);
+      if (scrollAmount >= distance) {
+        clearInterval(slideTimer);
+      }
+      if (element.scrollLeft + element.offsetWidth >= element.scrollWidth) {
+        setArrowDisable(true);
+      } else {
+        setArrowDisable(false);
+      }
+    }, speed);
+  };
 
   
   return (
@@ -106,6 +148,90 @@ function Home() {
           <p>Over 300,000 customers globally</p>
         </div>
       </div>
+    </div>
+
+    <div className='home-first-products'>
+    <div className='home-products-list-title'>
+        <h2>
+          热销产品
+        </h2>
+      </div>
+    <div className='horizontal-scroll-buttons'>
+        <button
+          onClick={() => {
+            handleHorizantalScroll(firstRef.current, 25, 100, -10);
+          }}
+        >
+          <AiOutlineArrowLeft/>
+      </button>
+
+        <button
+            onClick={() => {
+              handleHorizantalScroll(firstRef.current, 25, 100, 10);
+            }}
+          >
+            <AiOutlineArrowRight/>
+        </button>
+      </div>
+
+    <div className='home-products-list' ref={firstRef}>
+      
+      
+      <div className='home-products-wrapper'>
+        {favourites.map((product: any) => (
+          <ProductCard key={product._id} product={{
+            _id: product._id,
+            name: product.name,
+            category: product.category,
+            description: product.description,
+            price: product.price,
+            image: product.imageBuffer
+          }} />
+      ))}
+      </div>
+    </div>
+    </div>
+
+    <div className='home-second-products'>
+    <div className='home-products-list-title'>
+        <h2>
+          为你推荐
+        </h2>
+      </div>
+    <div className='horizontal-scroll-buttons'>
+        <button
+          onClick={() => {
+            handleHorizantalScroll(firstRef.current, 25, 100, -10);
+          }}
+        >
+          <AiOutlineArrowLeft/>
+      </button>
+
+        <button
+            onClick={() => {
+              handleHorizantalScroll(secRef.current, 25, 100, 10);
+            }}
+          >
+            <AiOutlineArrowRight/>
+        </button>
+      </div>
+
+    <div className='home-products-list' ref={secRef}>
+      
+      
+      <div className='home-products-wrapper'>
+        {randomProducts.map((product: any) => (
+          <ProductCard key={product._id} product={{
+            _id: product._id,
+            name: product.name,
+            category: product.category,
+            description: product.description,
+            price: product.price,
+            image: product.imageBuffer
+          }} />
+      ))}
+      </div>
+    </div>
     </div>
 
       <div className='stories-part'>
