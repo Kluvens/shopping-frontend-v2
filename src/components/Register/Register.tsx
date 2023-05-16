@@ -49,8 +49,12 @@ const Register = () => {
       const { token, userId } = response.data;
       Cookies.remove('token');
       Cookies.remove('userId');
-      Cookies.set("token", token);
-      Cookies.set("userId", userId);
+
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
+
+      Cookies.set("token", token, { expires: expirationDate, path: '/' });
+      Cookies.set("userId", userId, { expires: expirationDate, path: '/' });
       navigate(`/profile/${userId}`);
     } catch (error) {
       console.error(error);

@@ -4,6 +4,7 @@ import Nav from '../Nav/Nav';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Buffer } from 'buffer';
+import Loading from '../Loading/Loading';
 import './Cart.css';
 
 const Cart = () => {
@@ -11,17 +12,21 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`http://localhost:8082/api/users/cart/${id}`);
         const data = response.data;
         setCartItems(data.cart);
         console.log(data.cart);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -97,7 +102,11 @@ const Cart = () => {
   }
 
   return (
-    <div>
+    <>
+      {loading ? (
+      <Loading />
+    ) : (
+      <div>
       <Nav />
       <div className='cart-main'>
       
@@ -142,6 +151,8 @@ const Cart = () => {
       )}
     </div>
     </div>
+    )}
+    </>
   );
 }
 
