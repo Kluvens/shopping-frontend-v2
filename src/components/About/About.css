@@ -8,9 +8,10 @@
   text-align: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url('../../assets/chem-first.png');
+  background-image: url('../../assets/chem-first.webp');
   background-attachment: fixed;
   background-position: center;
+  fill: grayscale(20%);
 }
 
 .background-second {
@@ -22,7 +23,7 @@
   justify-content: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url('../../assets/chem-sec.jpg');
+  background-image: url('../../assets/chem-second.webp');
   background-attachment: fixed;
   background-position: center;
 }
@@ -36,7 +37,7 @@
   justify-content: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url('../../assets/chem-first.png');
+  background-image: url('../../assets/chem-third.jpeg');
   background-attachment: fixed;
   background-position: center;
 }
@@ -51,7 +52,7 @@
   text-align: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url('../../assets/chem-sec.jpg');
+  background-image: url('../../assets/chem-fourth.jpeg');
   background-attachment: fixed;
   background-position: center;
 }

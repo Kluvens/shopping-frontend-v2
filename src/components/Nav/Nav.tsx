@@ -14,7 +14,6 @@ const Nav = () => {
     if (link === 'home') {
       navigate('/');
     } else if (link === 'profile' || link === 'cart') {
-      console.log(link);
       const token = Cookies.get('token');
       const userId = Cookies.get('userId');
       if (token && userId) {
@@ -37,11 +36,8 @@ const Nav = () => {
 
   useEffect(() => {
     showBackground();
-  }, []);
-
-  useEffect(() => {
     const currentPath = window.location.pathname;
-    setActiveLink(currentPath.substring(1) || 'home');
+    setActiveLink(currentPath.substring(1).split('/')[0] || 'home');
   }, []);
 
   window.addEventListener('scroll', showBackground);

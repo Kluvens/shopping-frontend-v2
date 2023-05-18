@@ -5,6 +5,9 @@ import { ProductType } from "../Products/Products";
 import Heart from "../Heart/Heart";
 import Loading from "../Loading/Loading";
 import Cookies from 'js-cookie';
+import { Buffer } from "buffer";
+import Nav from "../Nav/Nav";
+import Footer from "../Footer/Footer";
 import './ProductDetails.css';
 
 const ProductDetails = () => {
@@ -14,7 +17,6 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(id);
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -58,12 +60,45 @@ const ProductDetails = () => {
       <Loading />
     ) : (
       <div>
-        {productDetail?.name}
-        {productDetail?.price}
-        <div className="favourite">
-          <Heart isClick={isFavourite} onClick={handleHeartClick} />
+        <div className="main-content">
+          <Nav />
+          <div className="product-display">
+            <div className="display-left">
+            <img
+              src={URL.createObjectURL(new Blob([Buffer.from(productDetail?.imageBuffer).buffer], { type: 'application/octet-binary' }))}
+              alt={productDetail?.name}
+            />
+            </div>
+
+            <div className="display-right">
+              <div className="title">
+                <h2>{productDetail?.name}</h2>
+                <div className="favourite">
+                  <Heart isclick={isFavourite} onClick={handleHeartClick} />
+                </div>
+              </div>
+
+              <div className="entry">
+                <div  className='entry-first'>分类: </div>
+                <div className='entry-second'>{productDetail?.category}</div>
+              </div>
+
+              <div className="entry">
+                <div  className='entry-first'>价格: </div>
+                <div className='entry-second'>¥{productDetail?.price}</div>
+              </div>
+
+              <div className="entry">
+                <div  className='entry-first'>简介: </div>
+                <div className='entry-second'>{productDetail?.description}</div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <Footer />
       </div>
+
     )}
       </div>
       

@@ -10,6 +10,7 @@ import { useState, useEffect, useRef } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
 import axios from 'axios';
+import Video from '../../assets/chem-intro.mp4';
 
 function Home() {
   const ref1 = useRef<HTMLDivElement>(null);
@@ -62,6 +63,23 @@ function Home() {
     fetchData();
   }, []);
 
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentPosition = window.pageYOffset;
+      setScrollPosition(currentPosition);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const opacity = 1 - scrollPosition / window.innerHeight + 0.1;
+
   const animateNumber = (setNumber: (n: number) => void, targetNumber: number) => {
     let startNumber = 0;
     const step = Math.ceil(targetNumber / 50); // 50 steps over 1.5s
@@ -77,16 +95,14 @@ function Home() {
   const pageContentsAnimation = useSpring({
     opacity: 1,
     from: { opacity: 0 },
-    delay: 0, // adds a 500ms delay before the animation starts
+    delay: 1000, // adds a 500ms delay before the animation starts
     config: { duration: 2000 }, // sets the duration of the animation to 1 second
   });
 
   const handleHorizantalScroll = (element: any, speed: number, distance: number, step: number) => {
-    console.log(element)
     let scrollAmount = 0;
     const slideTimer = setInterval(() => {
       element.scrollLeft = element.scrollLeft + step;
-      console.log(element.scrollLeft);
       scrollAmount += Math.abs(step);
       if (scrollAmount >= distance) {
         clearInterval(slideTimer);
@@ -105,6 +121,9 @@ function Home() {
       <Nav/>
 
       <div className='page'>
+        <div className="video-container">
+          <video src={Video} width="100%" height="auto" autoPlay loop muted style={{ opacity }} />
+        </div>
         <animated.div className='page-contents' style={pageContentsAnimation}>
           <h1>Your journey starts here</h1>
           <p>Choose your favourite place</p>

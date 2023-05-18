@@ -46,7 +46,6 @@ const Login = () => {
 
       Cookies.set("token", token, { expires: expirationDate, path: '/' });
       Cookies.set("userId", userId, { expires: expirationDate, path: '/' });
-      console.log(Cookies.get('userId'));
       navigate(`/profile/${userId}`);
     } catch (error: any) {
       if (error.response) {

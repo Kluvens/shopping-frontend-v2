@@ -1,11 +1,39 @@
 import './About.css';
 import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
+import Video from '../../assets/chem-sec-video.mp4';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const About = () => {
+  const navigate = useNavigate();
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentPosition = window.pageYOffset;
+      setScrollPosition(currentPosition);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const opacity = 1 - scrollPosition / window.innerHeight + 0.1;
+
+  const handleAboutClick = () => {
+    navigate('/products');
+  }
+
   return (
     <div className='background'>
       <Nav />
+      <div className="video-container">
+        <video src={Video} width="100%" height="auto" autoPlay loop muted style={{ opacity }} />
+      </div>
       <div className='background-contents'>
         <div className='background-first'>
           <h1>欢迎来到爱普瑞</h1>
@@ -27,7 +55,7 @@ const About = () => {
           <h1>社会责任</h1>
           <p>我们非常注重环境保护和社会责任。</p>
           <p>我们的生产流程符合环保要求，我们的团队也积极参与各种社会公益活动和慈善事业，为社会做出贡献。</p>
-          <button>看看我们的产品</button>
+          <button onClick={handleAboutClick}>看看我们的产品</button>
         </div>
       </div>
       

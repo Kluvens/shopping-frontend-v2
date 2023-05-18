@@ -29,8 +29,8 @@ const Product = (props: { key: string; product: ProductType }) => {
   }
   
   return (
-    <div className="product"  onClick={toProductDetails}>
-      <div className="p-img">
+    <div className="product">
+      <div className="p-img"  onClick={toProductDetails}>
         <img
           src={URL.createObjectURL(new Blob([Buffer.from(image.data).buffer], { type: 'application/octet-binary' }))}
           alt={name}

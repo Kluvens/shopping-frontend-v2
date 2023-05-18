@@ -5,6 +5,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Buffer } from 'buffer';
 import Loading from '../Loading/Loading';
+import Footer from '../Footer/Footer';
 import './Cart.css';
 
 const Cart = () => {
@@ -22,7 +23,6 @@ const Cart = () => {
         const response = await axios.get(`http://localhost:8082/api/users/cart/${id}`);
         const data = response.data;
         setCartItems(data.cart);
-        console.log(data.cart);
       } catch (error) {
         console.error(error);
       } finally {
@@ -150,6 +150,7 @@ const Cart = () => {
         </div>
       )}
     </div>
+    <Footer />
     </div>
     )}
     </>

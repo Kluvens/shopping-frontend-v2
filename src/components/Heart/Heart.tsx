@@ -4,12 +4,12 @@ import { setup, styled } from "goober";
 setup(createElement);
 
 export interface HeartProp {
-	isClick: boolean;
+	isclick: boolean;
 	styles?: any;
 	onClick: () => void;
 }
 
-const HeartUI = (styled('div') as any)(({ isClick, styles }: Partial<HeartProp>) => [
+const HeartUI = (styled('div') as any)(({ isclick, styles }: Partial<HeartProp>) => [
 	{
 		width: '100px',
 		height: '100px',
@@ -17,13 +17,13 @@ const HeartUI = (styled('div') as any)(({ isClick, styles }: Partial<HeartProp>)
 		cursor: 'pointer',
 		display: 'inline-block'
 	},
-	isClick && {
+	isclick && {
 		backgroundPosition: '-2799px 2px',
 		transition: 'background 1s steps(28)'
 	},
 	styles
 ]);
 
-export default function Heart({ isClick, onClick, styles }: HeartProp) {
-	return <HeartUI isClick={isClick} onClick={onClick} styles={styles} />;
+export default function Heart({ isclick, onClick, styles }: HeartProp) {
+	return <HeartUI isclick={isclick} onClick={onClick} styles={styles} />;
 }

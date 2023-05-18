@@ -8,6 +8,7 @@ import Product from './Product/Product';
 import Footer from '../Footer/Footer';
 import { RiOrderPlayFill } from 'react-icons/ri';
 import Loading from '../Loading/Loading';
+import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai'
 import './Products.css';
 
 export type ProductType = {
@@ -17,6 +18,7 @@ export type ProductType = {
   description: string;
   price: number;
   image: any;
+  imageBuffer? : any;
 };
 
 const Prodcuts = () => {
@@ -49,7 +51,6 @@ const Prodcuts = () => {
         setLoading(true);
         const response = await axios.get(`http://localhost:8082/api/products?category=${categoryParam}&orderby=${orderbyParam}&pagenum=${pagenumParam}&search=${searchParam}`);
         setProducts(response.data.products);
-        console.log(response.data.products[0].image);
         setPrevPage(response.data.prevPage);
         setNextPage(response.data.nextPage);
       } catch (error) {
@@ -146,9 +147,11 @@ const Prodcuts = () => {
               <Product key={product._id} product={product} />
             ))}
           </div>
-
-          {prevPage !== '' && <button onClick={handlePrev}>prev</button>}
-          {nextPage !== '' && <button onClick={handleNext}>next {nextPage}</button>}
+          
+          <div className='products-btn'>
+              {prevPage !== '' ? <div className='left-btn' onClick={handlePrev}><AiOutlineArrowLeft /><p>上一页</p></div> : <div className='left-btn-fake'></div>}
+              {nextPage !== '' ? <div className='right-btn' onClick={handleNext}><p>下一页</p><AiOutlineArrowRight /></div> : <div className='right-btn-fake'></div>}
+          </div>
 
         </div>
       </div>
