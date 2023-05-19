@@ -9,6 +9,7 @@ import { useSpring, animated } from 'react-spring';
 import { useState, useEffect, useRef } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Video from '../../assets/chem-intro.mp4';
 
@@ -26,6 +27,8 @@ function Home() {
   const firstRef = useRef(null);
   const secRef = useRef(null);
   const [arrowDisable, setArrowDisable] = useState(true);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
@@ -89,7 +92,7 @@ function Home() {
       if (startNumber >= targetNumber) {
         clearInterval(interval);
       }
-    }, 30); // 1000ms / 30 = ~33 frames per second
+    }, 10);
   };
 
   const pageContentsAnimation = useSpring({
@@ -115,7 +118,10 @@ function Home() {
     }, speed);
   };
 
-  
+  const handleButtonClick = () => {
+    navigate('/products');
+  }
+
   return (
     <div className='Home'>
       <Nav/>
@@ -127,7 +133,7 @@ function Home() {
         <animated.div className='page-contents' style={pageContentsAnimation}>
           <h1>Your journey starts here</h1>
           <p>Choose your favourite place</p>
-          <button className='page-button'>Start shopping</button>
+          <button onClick={handleButtonClick} className='page-button'>Start shopping</button>
         </animated.div>
       </div>
 

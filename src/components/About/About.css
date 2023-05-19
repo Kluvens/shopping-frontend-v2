@@ -86,3 +86,12 @@
 .background-contents button:hover {
   font-size: 22px;
 }
+
+html {
+  scroll-snap-type: y mandatory;
+}
+
+.background-contents section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}

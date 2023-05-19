@@ -100,8 +100,25 @@ const Prodcuts = () => {
           <div className='shopbg'>
             <h2>搜索</h2>
             <div className="shop-w">
-              <input name="skeyword" className="sch" type="text" placeholder="请输入cas号或产品名称." onChange={e => setSearchString(e.target.value)}/>
-              <button type="submit" className='schgo' onClick={() => handleSearch(searchString)}>Go</button>
+              <div className="products-form">
+                <button type="submit" onClick={() => handleSearch(searchString)}>
+                  <svg width="17" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="search">
+                      <path d="M7.667 12.667A5.333 5.333 0 107.667 2a5.333 5.333 0 000 10.667zM14.334 14l-2.9-2.9" stroke="currentColor" stroke-width="1.333" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+                <input 
+                  name="skeyword" 
+                  className="input" 
+                  placeholder="请输入产品名称." 
+                  type="text" 
+                  onChange={e => setSearchString(e.target.value)} 
+                  onKeyUp={e => {
+                    if (e.key === "Enter") {
+                      handleSearch(searchString);
+                    }
+                  }}
+                />
+              </div>
             </div>
           </div>
 
@@ -135,9 +152,10 @@ const Prodcuts = () => {
             <div className="filter">
               <RiOrderPlayFill className='order-icon' />
               <select id="filter-select" value={orderby} onChange={handleOrderBy}>
-                <option value="默认·">默认</option>
-                <option value="价格">价格</option>
-                <option value="收藏">收藏</option>
+                <option value="random">默认</option>
+                <option value="created">新品</option>
+                <option value="price">价格</option>
+                <option value="favourites">收藏</option>
               </select>
             </div>
           </div>
