@@ -146,7 +146,7 @@ function Home() {
           <p>iChemical provides accurate price forecast for over 380,000 chemicals</p>
           <p>and gets you chemicals from suppliers that best fit your sourcing budget.</p>
         </div>
-        <button>
+        <button onClick={handleButtonClick}>
           <span>Continue</span>
           <svg width="34" height="34" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="37" cy="37" r="35.5" stroke="black" strokeWidth="3"></circle>
@@ -181,26 +181,26 @@ function Home() {
           热销产品
         </h2>
       </div>
-    <div className='horizontal-scroll-buttons'>
-        <button
-          onClick={() => {
-            handleHorizantalScroll(firstRef.current, 25, 100, -10);
-          }}
-        >
-          <AiOutlineArrowLeft/>
-      </button>
-
-        <button
-            onClick={() => {
-              handleHorizantalScroll(firstRef.current, 25, 100, 10);
-            }}
-          >
-            <AiOutlineArrowRight/>
-        </button>
-      </div>
+    
 
     <div className='home-products-list' ref={firstRef}>
-      
+      <button
+        className='list-button-left'
+        onClick={() => {
+          handleHorizantalScroll(firstRef.current, 25, 100, -10);
+        }}
+      >
+        <AiOutlineArrowLeft/>
+    </button>
+
+      <button
+        className='list-button-right'
+          onClick={() => {
+            handleHorizantalScroll(firstRef.current, 25, 100, 10);
+          }}
+        >
+          <AiOutlineArrowRight/>
+      </button>
       
       <div className='home-products-wrapper'>
         {favourites.map((product: any) => (
@@ -223,26 +223,25 @@ function Home() {
           为你推荐
         </h2>
       </div>
-    <div className='horizontal-scroll-buttons'>
-        <button
-          onClick={() => {
-            handleHorizantalScroll(firstRef.current, 25, 100, -10);
-          }}
-        >
-          <AiOutlineArrowLeft/>
-      </button>
-
-        <button
-            onClick={() => {
-              handleHorizantalScroll(secRef.current, 25, 100, 10);
-            }}
-          >
-            <AiOutlineArrowRight/>
-        </button>
-      </div>
 
     <div className='home-products-list' ref={secRef}>
-      
+      <button
+        className='list-button-left'
+        onClick={() => {
+          handleHorizantalScroll(secRef.current, 25, 100, -10);
+        }}
+      >
+        <AiOutlineArrowLeft/>
+      </button>
+
+      <button
+        className='list-button-right'
+          onClick={() => {
+            handleHorizantalScroll(secRef.current, 25, 100, 10);
+          }}
+        >
+          <AiOutlineArrowRight/>
+      </button>
       
       <div className='home-products-wrapper'>
         {randomProducts.map((product: any) => (

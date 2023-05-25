@@ -25,7 +25,14 @@ const Product = (props: { key: string; product: ProductType }) => {
   }
 
   const toProductDetails = () => {
-    navigate(`/product/${_id}`);
+    const token = Cookies.get('token');
+    const userId = Cookies.get('userId');
+    if (token && userId) {
+      navigate(`/product/${_id}`);
+    } else {
+      navigate(`/login`);
+    }
+    
   }
   
   return (
